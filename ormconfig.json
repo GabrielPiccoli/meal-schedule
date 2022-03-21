@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "port": 3306,
+  "host": "informacoes.balaminut.com.br",
+  "username": "newsgc_user",
+  "password": "bhfR2ImdRA84IXxz",
+  "database": "newsgc",
+  "entities": ["./src/modules/**/infra/typeorm/entities/*.ts"],
+  "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/shared/infra/typeorm/migrations"
+  }
+}

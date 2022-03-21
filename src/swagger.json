@@ -1,0 +1,374 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SGC - Content Management System Documentation",
+    "description": "This is the documentation to the new SGC api",
+    "version": "1.0.0",
+    "contact": {
+      "email": "desenvolvimento03@tbrweb.com.br"
+    }
+  },
+  "paths": {
+    "/sessions": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Authentication profile",
+        "description": "To authentication a profile, use the following route and schema",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" },
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "email": { "type": "string" }
+                      }
+                    },
+                    "refresh_token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User or password incorrect!"
+          }
+        }
+      }
+    },
+    "/refresh-token": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Refresh a profile token",
+        "description": "To refresh a profile token, use the following route and schema",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" },
+                    "refresh_token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Refresh token does not exists"
+          }
+        }
+      }
+    },
+    "/profiles": {
+      "post": {
+        "tags": ["Profiles"],
+        "summary": "Create a new profile",
+        "description": "To create a new profile, use the following route and schema",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Profile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Profile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Profile already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Profiles"],
+        "summary": "List all profiles",
+        "description": "To list all profiles, use the following route",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Profile"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Profiles"],
+        "summary": "Update a profile",
+        "description": "To update a profile, use the following route and schema",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Profile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Profile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Profile does not exists"
+          }
+        }
+      }
+    },
+    "/profiles/{id}": {
+      "delete": {
+        "tags": ["Profiles"],
+        "summary": "Delete a profile",
+        "description": "To delete a profile, use the following route",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Profile id",
+          "required": true,
+          "schema": { "type": "string" }
+        }],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Profile does not exists"
+          }
+        }
+      }
+    },
+    "/profiles/me": {
+      "get": {
+        "tags": ["Profiles"],
+        "summary": "Get information of an authenticated profile",
+        "description": "To get the information of the authenticated profile, use the following route",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Profile"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seo": {
+      "post": {
+        "tags": ["Seo"],
+        "summary": "Create the site SEO",
+        "description": "To create the SEO for the site, use the following route and schema",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Seo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Seo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The SEO already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Seo"],
+        "summary": "Get the SEO information",
+        "description": "To get the SEO information, use the following route",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Seo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Seo"],
+        "summary": "Update the SEO information",
+        "description": "To update the SEO profile, use the following route and schema",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Seo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Seo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The SEO does not exists"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Seo"],
+        "summary": "Delete the SEO",
+        "description": "To delete the SEO, use the following route",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "The SEO does not exists"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "user": { "type": "string" },
+        "password": { "type": "string" }
+      }
+    },
+    "Seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "keywords": { "type": "string" },
+        "author": { "type": "string" },
+        "fbpixel_code": { "type": "string" },
+        "ga_code": { "type": "string" },
+        "schema_twitter": { "type": "string" },
+        "schema_facebook": { "type": "string" },
+        "schema_linkedin": { "type": "string" },
+        "schema_instagram": { "type": "string" },
+        "schema_street": { "type": "string" },
+        "schema_region": { "type": "string" },
+        "schema_cep": { "type": "string" },
+        "schema_country": { "type": "string" }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
