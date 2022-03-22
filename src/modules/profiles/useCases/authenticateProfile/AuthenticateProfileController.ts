@@ -5,13 +5,13 @@ import { AuthenticateProfileUseCase } from "./AuthenticateProfileUseCase";
 
 class AuthenticateProfileController {
   async handle(req: Request, res: Response): Promise<Response> {
-    const { password, user } = req.body;
+    const { password, username } = req.body;
     const authenticateProfileUseCase = container.resolve(
       AuthenticateProfileUseCase
     );
     const token = await authenticateProfileUseCase.execute({
       password,
-      user,
+      username,
     });
 
     return res.json(token);

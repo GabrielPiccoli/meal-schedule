@@ -17,7 +17,7 @@ describe("List Profiles", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     });
     const profiles = await listProfilesUseCase.execute();
 

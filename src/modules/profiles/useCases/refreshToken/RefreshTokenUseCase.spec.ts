@@ -41,12 +41,12 @@ describe("Refresh Profile Token", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     };
     await createProfileUseCase.execute(profile);
 
     const { refresh_token } = await authenticateProfileUseCase.execute({
-      user: profile.user,
+      username: profile.username,
       password: profile.password,
     });
     const result = await refreshTokenUseCase.execute(refresh_token);
@@ -59,12 +59,12 @@ describe("Refresh Profile Token", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     };
     await createProfileUseCase.execute(profile);
 
     const { refresh_token } = await authenticateProfileUseCase.execute({
-      user: profile.user,
+      username: profile.username,
       password: profile.password,
     });
 

@@ -10,7 +10,7 @@ class ProfilesRepositoryInMemory implements IProfilesRepository {
     email,
     name,
     password,
-    user,
+    username,
   }: ICreateProfileDTO): Promise<Profile> {
     const profile = new Profile();
 
@@ -18,7 +18,7 @@ class ProfilesRepositoryInMemory implements IProfilesRepository {
       email,
       name,
       password,
-      user,
+      username,
     });
 
     this.profiles.push(profile);
@@ -26,8 +26,10 @@ class ProfilesRepositoryInMemory implements IProfilesRepository {
     return profile;
   }
 
-  async findByUser(user: string): Promise<Profile> {
-    const profile = this.profiles.find((profile) => profile.user === user);
+  async findByUser(username: string): Promise<Profile> {
+    const profile = this.profiles.find(
+      (profile) => profile.username === username
+    );
     return profile;
   }
 

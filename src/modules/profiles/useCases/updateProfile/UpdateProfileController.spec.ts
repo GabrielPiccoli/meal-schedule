@@ -17,8 +17,8 @@ describe("Update Profiles Controller", () => {
     const password = await hash("admin", 8);
 
     await connection.query(
-      `INSERT INTO profiles(id, name, email, user, password)
-       VALUES('${id}', 'Suporte TBrWeb', 'suporte@tbrweb.com.br', 'balaminut', '${password}')
+      `INSERT INTO profiles(id, name, email, password, username)
+      VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
       `
     );
   });
@@ -30,7 +30,7 @@ describe("Update Profiles Controller", () => {
 
   it("should be able to update a profile", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;
@@ -41,7 +41,7 @@ describe("Update Profiles Controller", () => {
         email: "desenvolvimento03@tbrweb.com.br",
         name: "Gabriel Piccoli",
         password: "@@123abc",
-        user: "admin",
+        username: "admin",
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ describe("Update Profiles Controller", () => {
         email: "desenvolvimento03@tbrweb.com.br",
         name: "Gabriel Piccoli Updated",
         password: "@@123abc",
-        user: "admin",
+        username: "admin",
       })
       .set({ Authorization: `Bearer ${token}` });
 
@@ -62,7 +62,7 @@ describe("Update Profiles Controller", () => {
 
   it("should not be able to update a non exists profile", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;
@@ -73,7 +73,7 @@ describe("Update Profiles Controller", () => {
         email: "desenvolvimento03@tbrweb.com.br",
         name: "Gabriel Piccoli Updated",
         password: "@@123abc",
-        user: "admin",
+        username: "admin",
       })
       .set({ Authorization: `Bearer ${token}` });
 

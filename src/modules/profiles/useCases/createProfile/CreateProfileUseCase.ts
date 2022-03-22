@@ -18,10 +18,10 @@ class CreateProfileUseCase {
     email,
     name,
     password,
-    user,
+    username,
   }: ICreateProfileDTO): Promise<Profile> {
     const profileUserAlreadyExists = await this.profilesRepository.findByUser(
-      user
+      username
     );
 
     if (profileUserAlreadyExists) {
@@ -33,7 +33,7 @@ class CreateProfileUseCase {
       email,
       name,
       password: passwordHash,
-      user,
+      username,
     });
     const profileTreated = instanceToPlain(profile) as Profile;
 

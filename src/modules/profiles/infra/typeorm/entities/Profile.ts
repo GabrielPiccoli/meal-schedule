@@ -20,7 +20,7 @@ class Profile {
   email: string;
 
   @Column()
-  user: string;
+  username: string;
 
   @Exclude()
   @Column()

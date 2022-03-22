@@ -17,8 +17,8 @@ describe("Create Profile Controller", () => {
     const password = await hash("admin", 8);
 
     await connection.query(
-      `INSERT INTO profiles(id, name, email, user, password)
-       VALUES('${id}', 'Suporte TBrWeb', 'suporte@tbrweb.com.br', 'balaminut', '${password}')
+      `INSERT INTO profiles(id, name, email, password, username)
+      VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
       `
     );
   });
@@ -30,7 +30,7 @@ describe("Create Profile Controller", () => {
 
   it("should be able to create a new profile", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;
@@ -40,7 +40,7 @@ describe("Create Profile Controller", () => {
         email: "desenvolvimento03@tbrweb.com.br",
         name: "Gabriel Piccoli",
         password: "@@123abc",
-        user: "admin",
+        username: "admin",
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -49,9 +49,9 @@ describe("Create Profile Controller", () => {
     expect(response.status).toBe(201);
   });
 
-  it("should not be able to create a new profile with same user", async () => {
+  it("should not be able to create a new profile with same username", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;
@@ -61,7 +61,7 @@ describe("Create Profile Controller", () => {
         email: "desenvolvimento03@tbrweb.com.br",
         name: "Gabriel Piccoli",
         password: "@@123abc",
-        user: "balaminut",
+        username: "admin",
       })
       .set({
         Authorization: `Bearer ${token}`,

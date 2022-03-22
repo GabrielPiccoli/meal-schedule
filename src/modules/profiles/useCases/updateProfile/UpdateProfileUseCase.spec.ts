@@ -18,14 +18,14 @@ describe("Update Profile", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     });
 
     const updatedProfile = await updateProfileUseCase.execute({
       email: "john.doe@test.com",
       name: "John Doe Updated",
       password: "1234",
-      user: "john",
+      username: "john",
       id: profile.id,
     });
 
@@ -38,7 +38,7 @@ describe("Update Profile", () => {
         email: "john.doe@test.com",
         name: "John Doe Updated",
         password: "1234",
-        user: "john",
+        username: "john",
         id: "12345",
       })
     ).rejects.toEqual(new AppError("Profile does not exists"));

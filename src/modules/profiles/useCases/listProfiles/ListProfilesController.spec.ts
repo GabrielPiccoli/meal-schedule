@@ -17,8 +17,8 @@ describe("List Profiles Controller", () => {
     const password = await hash("admin", 8);
 
     await connection.query(
-      `INSERT INTO profiles(id, name, email, user, password)
-       VALUES('${id}', 'Suporte TBrWeb', 'suporte@tbrweb.com.br', 'balaminut', '${password}')
+      `INSERT INTO profiles(id, name, email, password, username)
+      VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
       `
     );
   });
@@ -30,7 +30,7 @@ describe("List Profiles Controller", () => {
 
   it("should be able to list all profiles", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;

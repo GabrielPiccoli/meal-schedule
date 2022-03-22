@@ -8,7 +8,7 @@ import { AppError } from "@shared/errors/AppError";
 
 interface IPayload {
   sub: string;
-  user: string;
+  username: string;
 }
 
 interface ITokenResponse {
@@ -26,7 +26,10 @@ class RefreshTokenUseCase {
   ) {}
 
   async execute(token: string): Promise<ITokenResponse> {
-    const { user, sub } = verify(token, auth.secret_refresh_token) as IPayload;
+    const { username, sub } = verify(
+      token,
+      auth.secret_refresh_token
+    ) as IPayload;
     const profile_id = sub;
     const profileToken =
       await this.profilesTokenRepository.findByProfileIdAndRefreshToken(
@@ -40,7 +43,7 @@ class RefreshTokenUseCase {
 
     await this.profilesTokenRepository.deleteById(profileToken.id);
 
-    const refresh_token = sign({ user }, auth.secret_refresh_token, {
+    const refresh_token = sign({ username }, auth.secret_refresh_token, {
       subject: sub,
       expiresIn: auth.expires_in_refresh_token,
     });

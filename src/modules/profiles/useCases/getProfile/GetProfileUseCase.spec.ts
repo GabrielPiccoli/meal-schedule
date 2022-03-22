@@ -18,7 +18,7 @@ describe("Get Profile (me)", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     });
 
     const profileMe = await getProfileUseCase.execute(profile.id);

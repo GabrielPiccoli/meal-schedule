@@ -18,18 +18,18 @@ describe("Create Profile", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     });
 
     expect(profile).toHaveProperty("id");
   });
 
-  it("should not be able to create a new profile with same user", async () => {
+  it("should not be able to create a new profile with same username", async () => {
     await createProfileUseCase.execute({
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     });
 
     await expect(
@@ -37,8 +37,8 @@ describe("Create Profile", () => {
         email: "john.doe2@test.com",
         name: "John Doe2",
         password: "12345",
-        user: "john",
+        username: "john",
       })
-    ).rejects.toEqual(new AppError("User already exists"));
+    ).rejects.toEqual(new AppError("Username already exists"));
   });
 });

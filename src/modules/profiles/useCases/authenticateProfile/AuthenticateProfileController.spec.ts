@@ -17,8 +17,8 @@ describe("Authenticate Profile Controller", () => {
     const password = await hash("admin", 8);
 
     await connection.query(
-      `INSERT INTO profiles(id, name, email, user, password)
-       VALUES('${id}', 'Suporte TBrWeb', 'suporte@tbrweb.com.br', 'balaminut', '${password}')
+      `INSERT INTO profiles(id, name, email, password, username)
+      VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
       `
     );
   });
@@ -30,7 +30,7 @@ describe("Authenticate Profile Controller", () => {
 
   it("should be able to authenticate a profile", async () => {
     const response = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "admin",
     });
 
@@ -39,7 +39,7 @@ describe("Authenticate Profile Controller", () => {
 
   it("should not be able to authenticate a non exists profile", async () => {
     const response = await request(app).post("/sessions").send({
-      user: "teste",
+      username: "teste",
       password: "admin",
     });
 
@@ -48,7 +48,7 @@ describe("Authenticate Profile Controller", () => {
 
   it("should not be able to authenticate a profile with wrong password", async () => {
     const response = await request(app).post("/sessions").send({
-      user: "balaminut",
+      username: "admin",
       password: "123",
     });
 

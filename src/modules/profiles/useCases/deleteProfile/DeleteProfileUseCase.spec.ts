@@ -18,7 +18,7 @@ describe("Delete Profile", () => {
       email: "john.doe2@test.com",
       name: "John Doe2",
       password: "12345",
-      user: "john",
+      username: "john",
     });
     await deleteProfileUseCase.execute(profile.id);
     const profiles = await profilesRepositoryInMemory.list();

@@ -16,14 +16,14 @@ class ProfilesRepository implements IProfilesRepository {
     email,
     name,
     password,
-    user,
+    username,
     id,
   }: ICreateProfileDTO): Promise<Profile> {
     const profile = this.repository.create({
       email,
       name,
       password,
-      user,
+      username,
       id,
     });
 
@@ -32,8 +32,8 @@ class ProfilesRepository implements IProfilesRepository {
     return profile;
   }
 
-  async findByUser(user: string): Promise<Profile> {
-    const profile = await this.repository.findOne({ user });
+  async findByUser(username: string): Promise<Profile> {
+    const profile = await this.repository.findOne({ username });
     return profile;
   }
 

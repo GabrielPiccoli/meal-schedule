@@ -1,12 +1,11 @@
 {
-  "name": "newsgc",
+  "name": "meal-schedule",
   "version": "1.0.0",
-  "description": "Nova SGC TBrWeb",
+  "description": "A calendar for meal planing",
   "main": "index.js",
-  "repository": "https://github.com/GabrielPiccoli/newsgc.git",
+  "repository": "https://github.com/GabrielPiccoli/meal-schedule.git",
   "author": "Gabriel Piccoli <gabriel.pdmarcos@gmail.com>",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",

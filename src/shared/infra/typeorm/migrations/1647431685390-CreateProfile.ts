@@ -8,24 +8,26 @@ export class CreateProfile1647431685390 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "varchar(255)",
+            type: "uuid",
             isPrimary: true,
           },
           {
             name: "name",
-            type: "varchar(255)",
+            type: "varchar",
           },
           {
             name: "email",
-            type: "varchar(255)",
+            type: "varchar",
+            isUnique: true,
           },
           {
-            name: "user",
-            type: "varchar(20)",
+            name: "username",
+            type: "varchar",
+            isUnique: true,
           },
           {
             name: "password",
-            type: "varchar(100)",
+            type: "varchar",
           },
           {
             name: "created_at",

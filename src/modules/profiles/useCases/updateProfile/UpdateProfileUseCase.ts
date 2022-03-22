@@ -18,7 +18,7 @@ class UpdateProfileUseCase {
     email,
     name,
     password,
-    user,
+    username,
     id,
   }: ICreateProfileDTO): Promise<Profile> {
     const profileExists = await this.profilesRepository.findById(id);
@@ -33,7 +33,7 @@ class UpdateProfileUseCase {
       email,
       name,
       password: passwordHash,
-      user,
+      username,
     });
     const profileTreated = instanceToPlain(profile) as Profile;
 

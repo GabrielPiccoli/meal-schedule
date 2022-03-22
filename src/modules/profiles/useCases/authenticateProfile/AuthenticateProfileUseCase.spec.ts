@@ -35,12 +35,12 @@ describe("Authenticate Profile", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     };
     await createProfileUseCase.execute(profile);
 
     const result = await authenticateProfileUseCase.execute({
-      user: profile.user,
+      username: profile.username,
       password: profile.password,
     });
 
@@ -50,7 +50,7 @@ describe("Authenticate Profile", () => {
   it("should not be able to authenticate a non exists profile", async () => {
     await expect(
       authenticateProfileUseCase.execute({
-        user: "admin",
+        username: "admin",
         password: "admin",
       })
     ).rejects.toEqual(new AppError("User or password incorrect"));
@@ -61,13 +61,13 @@ describe("Authenticate Profile", () => {
       email: "john.doe@test.com",
       name: "John Doe",
       password: "1234",
-      user: "john",
+      username: "john",
     };
     await createProfileUseCase.execute(profile);
 
     await expect(
       authenticateProfileUseCase.execute({
-        user: profile.user,
+        username: profile.username,
         password: "admin",
       })
     ).rejects.toEqual(new AppError("User or password incorrect"));

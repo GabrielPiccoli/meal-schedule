@@ -4,17 +4,17 @@ import { v4 as uuidV4 } from "uuid";
 import createConnection from "../index";
 
 async function create() {
-  const connection = await createConnection();
+  const connection = await createConnection("localhost");
   const id = uuidV4();
-  const password = await hash("SOpf@@BbdVsD", 8);
+  const password = await hash("200116", 8);
 
   await connection.query(
-    `INSERT INTO profiles(id, name, email, user, password)
-     VALUES('${id}', 'Suporte TBrWeb', 'suporte@tbrweb.com.br', 'balaminut', '${password}')
+    `INSERT INTO profiles(id, name, email, password, username)
+     VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
     `
   );
 
   await connection.close();
 }
 
-create().then(() => console.log("User balaminut created!"));
+create().then(() => console.log("User admin created!"));

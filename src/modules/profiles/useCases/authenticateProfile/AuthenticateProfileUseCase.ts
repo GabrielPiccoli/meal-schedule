@@ -9,7 +9,7 @@ import { IDateProvider } from "@shared/container/providers/DateProvider/IDatePro
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
-  user: string;
+  username: string;
   password: string;
 }
 
@@ -33,8 +33,8 @@ class AuthenticateProfileUseCase {
     private dateProvider: IDateProvider
   ) {}
 
-  async execute({ user, password }: IRequest): Promise<IResponse> {
-    const profile = await this.profilesRepository.findByUser(user);
+  async execute({ username, password }: IRequest): Promise<IResponse> {
+    const profile = await this.profilesRepository.findByUser(username);
     const {
       expires_in_token,
       secret_refresh_token,
@@ -58,7 +58,7 @@ class AuthenticateProfileUseCase {
       expiresIn: expires_in_token,
     });
 
-    const refresh_token = sign({ user }, secret_refresh_token, {
+    const refresh_token = sign({ username }, secret_refresh_token, {
       subject: profile.id,
       expiresIn: expires_in_refresh_token,
     });

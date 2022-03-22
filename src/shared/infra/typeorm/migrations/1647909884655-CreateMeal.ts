@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateProfilesToken1647440729846 implements MigrationInterface {
+export class CreateMeal1647909884655 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "profiles_token",
+        name: "meals",
         columns: [
           {
             name: "id",
@@ -12,31 +12,41 @@ export class CreateProfilesToken1647440729846 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "refresh_token",
-            type: "varchar",
-          },
-          {
             name: "profile_id",
             type: "uuid",
           },
           {
-            name: "expires_date",
+            name: "description",
+            type: "varchar",
+          },
+          {
+            name: "meal_date",
             type: "timestamp",
+          },
+          {
+            name: "period",
+            type: "enum",
+            enum: ["breakfast", "lunch", "dinner"],
           },
           {
             name: "created_at",
             type: "timestamp",
             default: "now()",
           },
+          {
+            name: "updated_at",
+            type: "timestamp",
+            default: "now()",
+          },
         ],
         foreignKeys: [
           {
-            name: "FKProfileToken",
+            name: "FKMealProfile",
+            columnNames: ["profile_id"],
             referencedTableName: "profiles",
             referencedColumnNames: ["id"],
-            columnNames: ["profile_id"],
-            onDelete: "CASCADE",
             onUpdate: "CASCADE",
+            onDelete: "CASCADE",
           },
         ],
       })
@@ -44,6 +54,6 @@ export class CreateProfilesToken1647440729846 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("profiles_token");
+    await queryRunner.dropTable("meals");
   }
 }
