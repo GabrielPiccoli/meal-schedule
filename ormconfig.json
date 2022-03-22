@@ -1,10 +1,10 @@
 {
-  "type": "mysql",
-  "port": 3306,
-  "host": "informacoes.balaminut.com.br",
-  "username": "newsgc_user",
-  "password": "bhfR2ImdRA84IXxz",
-  "database": "newsgc",
+  "type": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "username": "docker",
+  "password": "mealschedule",
+  "database": "mealplan",
   "entities": ["./src/modules/**/infra/typeorm/entities/*.ts"],
   "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
   "cli": {
