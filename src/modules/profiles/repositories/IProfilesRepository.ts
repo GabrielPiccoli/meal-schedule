@@ -7,6 +7,7 @@ interface IProfilesRepository {
   list(): Promise<Profile[]>;
   findById(id: string): Promise<Profile>;
   deleteById(id: string): Promise<void>;
+  findByEmail(email: string): Promise<Profile>;
 }
 
 export { IProfilesRepository };

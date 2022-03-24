@@ -50,6 +50,11 @@ class ProfilesRepository implements IProfilesRepository {
   async deleteById(id: string): Promise<void> {
     await this.repository.delete(id);
   }
+
+  async findByEmail(email: string): Promise<Profile> {
+    const profile = await this.repository.findOne({ email });
+    return profile;
+  }
 }
 
 export { ProfilesRepository };

@@ -20,12 +20,19 @@ class CreateProfileUseCase {
     password,
     username,
   }: ICreateProfileDTO): Promise<Profile> {
-    const profileUserAlreadyExists = await this.profilesRepository.findByUser(
-      username
+    const profileUsernameAlreadyExists =
+      await this.profilesRepository.findByUser(username);
+
+    if (profileUsernameAlreadyExists) {
+      throw new AppError("Username already used");
+    }
+
+    const profileEmailAlreadyExists = await this.profilesRepository.findByEmail(
+      email
     );
 
-    if (profileUserAlreadyExists) {
-      throw new AppError("Profile already exists");
+    if (profileEmailAlreadyExists) {
+      throw new AppError("Email already used");
     }
 
     const passwordHash = await hash(password, 8);

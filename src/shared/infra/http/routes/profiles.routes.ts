@@ -18,7 +18,7 @@ const deleteProfileController = new DeleteProfileController();
 
 profilesRoutes.get("/", ensureAuthenticated, listProfilesController.handle);
 profilesRoutes.get("/me", ensureAuthenticated, getProfileController.handle);
-profilesRoutes.post("/", ensureAuthenticated, createProfileController.handle);
+profilesRoutes.post("/", createProfileController.handle);
 profilesRoutes.put("/:id", ensureAuthenticated, updateProfileController.handle);
 profilesRoutes.delete(
   "/:id",
