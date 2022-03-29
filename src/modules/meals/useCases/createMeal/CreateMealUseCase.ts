@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICreateMealDTO } from "@modules/meals/dtos/ICreateMealDTO";
+import { MealPeriod } from "@modules/meals/dtos/MealPeriod";
 import { Meal } from "@modules/meals/infra/typeorm/entities/Meal";
 import { IMealsRepository } from "@modules/meals/repositories/IMealsRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -18,6 +19,10 @@ class CreateMealUseCase {
     period,
     profile_id,
   }: ICreateMealDTO): Promise<Meal> {
+    if (!Object.values(MealPeriod).includes(period)) {
+      throw new AppError(`${period} is not a valid period`);
+    }
+
     const mealAlreadyExists =
       await this.mealsRepository.findByDatePeriodAndProfile(
         meal_date,

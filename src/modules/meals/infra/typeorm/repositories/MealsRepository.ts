@@ -34,7 +34,21 @@ class MealsRepository implements IMealsRepository {
   }
 
   async list(profile_id: string): Promise<Meal[]> {
-    const all = await this.repository.find({ profile_id });
+    const all = await this.repository
+      .createQueryBuilder("meals")
+      .where("profile_id = :profile_id", { profile_id })
+      .orderBy("meal_date", "ASC")
+      .getMany();
+    return all;
+  }
+
+  async listByPeriod(period: MealPeriod, profile_id: string): Promise<Meal[]> {
+    const all = await this.repository
+      .createQueryBuilder("meals")
+      .where("profile_id = :profile_id", { profile_id })
+      .andWhere("period = :period", { period })
+      .orderBy("meal_date", "ASC")
+      .getMany();
     return all;
   }
 

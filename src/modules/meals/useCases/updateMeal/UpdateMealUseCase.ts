@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICreateMealDTO } from "@modules/meals/dtos/ICreateMealDTO";
+import { MealPeriod } from "@modules/meals/dtos/MealPeriod";
 import { Meal } from "@modules/meals/infra/typeorm/entities/Meal";
 import { IMealsRepository } from "@modules/meals/repositories/IMealsRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -23,6 +24,10 @@ class UpdateMealUseCase {
 
     if (!mealExists) {
       throw new AppError("The meal does not exists");
+    }
+
+    if (!Object.values(MealPeriod).includes(period)) {
+      throw new AppError(`${period} is not a valid period`);
     }
 
     const mealConflictDateAndPeriod =
