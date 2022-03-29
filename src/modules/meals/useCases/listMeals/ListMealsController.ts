@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ListMealUseCase } from "./ListMealUseCase";
+import { ListMealsUseCase } from "./ListMealsUseCase";
 
-class ListMealController {
+class ListMealsController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id: profile_id } = req.profile;
-    const listMealUseCase = container.resolve(ListMealUseCase);
-    const all = await listMealUseCase.execute(profile_id);
+    const listMealsUseCase = container.resolve(ListMealsUseCase);
+    const all = await listMealsUseCase.execute(profile_id);
 
     return res.json(all);
   }
 }
 
-export { ListMealController };
+export { ListMealsController };

@@ -8,7 +8,7 @@ import createConnection from "@shared/infra/typeorm";
 
 let connection: Connection;
 
-describe("Delete Profile Controller", () => {
+describe("Delete Meal Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
@@ -18,8 +18,8 @@ describe("Delete Profile Controller", () => {
 
     await connection.query(
       `INSERT INTO profiles(id, name, email, password, username)
-     VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
-    `
+      VALUES('${id}', 'Gabriel Piccoli', 'gabriel.pdmarcos@gmail.com', '${password}', 'admin')
+      `
     );
   });
 
@@ -28,20 +28,25 @@ describe("Delete Profile Controller", () => {
     await connection.close();
   });
 
-  it("should be able to delete a profile", async () => {
+  it("should be able to delete a meal", async () => {
     const responseToken = await request(app).post("/sessions").send({
       username: "admin",
       password: "admin",
     });
     const { token } = responseToken.body;
     const { body } = await request(app)
-      .get("/profiles/me")
+      .post("/meals")
+      .send({
+        description: "Test",
+        meal_date: "2022-03-30",
+        period: "breakfast",
+      })
       .set({
         Authorization: `Bearer ${token}`,
       });
 
     const response = await request(app)
-      .delete(`/profiles/${body.id}`)
+      .delete(`/meals/${body.id}`)
       .set({
         Authorization: `Bearer ${token}`,
       });

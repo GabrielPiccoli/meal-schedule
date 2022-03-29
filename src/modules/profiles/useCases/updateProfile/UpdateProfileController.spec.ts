@@ -36,47 +36,19 @@ describe("Update Profiles Controller", () => {
     const { token } = responseToken.body;
 
     const { body } = await request(app)
-      .post("/profiles")
-      .send({
-        email: "desenvolvimento03@tbrweb.com.br",
-        name: "Gabriel Piccoli",
-        password: "@@123abc",
-        username: "admin",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
+      .get("/profiles/me")
+      .set({ Authorization: `Bearer ${token}` });
 
     const response = await request(app)
       .put(`/profiles/${body.id}`)
       .send({
-        email: "desenvolvimento03@tbrweb.com.br",
+        email: "gabriel.pdmarcos@gmail.com",
         name: "Gabriel Piccoli Updated",
-        password: "@@123abc",
+        password: "admin",
         username: "admin",
       })
       .set({ Authorization: `Bearer ${token}` });
 
     expect(response.body.name).toEqual("Gabriel Piccoli Updated");
-  });
-
-  it("should not be able to update a non exists profile", async () => {
-    const responseToken = await request(app).post("/sessions").send({
-      username: "admin",
-      password: "admin",
-    });
-    const { token } = responseToken.body;
-
-    const response = await request(app)
-      .put("/profiles/12345")
-      .send({
-        email: "desenvolvimento03@tbrweb.com.br",
-        name: "Gabriel Piccoli Updated",
-        password: "@@123abc",
-        username: "admin",
-      })
-      .set({ Authorization: `Bearer ${token}` });
-
-    expect(response.status).toBe(400);
   });
 });

@@ -39,6 +39,24 @@ describe("Create Profile", () => {
         password: "12345",
         username: "john",
       })
-    ).rejects.toEqual(new AppError("Username already exists"));
+    ).rejects.toEqual(new AppError("Username already used"));
+  });
+
+  it("should not be able to create a new profile with same email", async () => {
+    await createProfileUseCase.execute({
+      email: "john.doe@test.com",
+      name: "John Doe",
+      password: "1234",
+      username: "john",
+    });
+
+    await expect(
+      createProfileUseCase.execute({
+        email: "john.doe@test.com",
+        name: "John Doe2",
+        password: "12345",
+        username: "john2",
+      })
+    ).rejects.toEqual(new AppError("Email already used"));
   });
 });

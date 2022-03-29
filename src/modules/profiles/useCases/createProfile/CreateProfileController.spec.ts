@@ -29,44 +29,13 @@ describe("Create Profile Controller", () => {
   });
 
   it("should be able to create a new profile", async () => {
-    const responseToken = await request(app).post("/sessions").send({
-      username: "admin",
-      password: "admin",
+    const response = await request(app).post("/profiles").send({
+      email: "teste@teste.com.br",
+      name: "Teste",
+      password: "test",
+      username: "test",
     });
-    const { token } = responseToken.body;
-    const response = await request(app)
-      .post("/profiles")
-      .send({
-        email: "desenvolvimento03@tbrweb.com.br",
-        name: "Gabriel Piccoli",
-        password: "@@123abc",
-        username: "admin",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
 
     expect(response.status).toBe(201);
-  });
-
-  it("should not be able to create a new profile with same username", async () => {
-    const responseToken = await request(app).post("/sessions").send({
-      username: "admin",
-      password: "admin",
-    });
-    const { token } = responseToken.body;
-    const response = await request(app)
-      .post("/profiles")
-      .send({
-        email: "desenvolvimento03@tbrweb.com.br",
-        name: "Gabriel Piccoli",
-        password: "@@123abc",
-        username: "admin",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
-
-    expect(response.status).toBe(400);
   });
 });

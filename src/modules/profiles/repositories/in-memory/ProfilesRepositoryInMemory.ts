@@ -33,6 +33,11 @@ class ProfilesRepositoryInMemory implements IProfilesRepository {
     return profile;
   }
 
+  async findByEmail(email: string): Promise<Profile> {
+    const profile = this.profiles.find((profile) => profile.email === email);
+    return profile;
+  }
+
   async list(): Promise<Profile[]> {
     const all = this.profiles;
     return all;
