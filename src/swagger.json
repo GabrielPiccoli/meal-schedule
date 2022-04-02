@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "SGC - Content Management System Documentation",
-    "description": "This is the documentation to the new SGC api",
+    "title": "Meal Schedule",
+    "description": "This is the documentation to the meal schedule, an api to control the daily meals",
     "version": "1.0.0",
     "contact": {
       "email": "gabriel.pdmarcos@gmail.com"
@@ -98,9 +98,6 @@
         "tags": ["Profiles"],
         "summary": "Create a new profile",
         "description": "To create a new profile, use the following route and schema",
-        "security": [
-          { "bearerAuth": [] }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -229,19 +226,16 @@
         }
       }
     },
-    "/seo": {
+    "/meals": {
       "post": {
-        "tags": ["Seo"],
-        "summary": "Create the site SEO",
-        "description": "To create the SEO for the site, use the following route and schema",
-        "security": [
-          { "bearerAuth": [] }
-        ],
+        "tags": ["Meals"],
+        "summary": "Create a new meal",
+        "description": "To create a new meal, use the following route and schema",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/Seo"
+                "$ref": "#/definitions/Meal"
               }
             }
           }
@@ -252,20 +246,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Seo"
+                  "$ref": "#/definitions/Meal"
                 }
               }
             }
           },
           "400": {
-            "description": "The SEO already exists"
+            "description": "A meal already exists in the same day and period"
           }
         }
       },
       "get": {
-        "tags": ["Seo"],
-        "summary": "Get the SEO information",
-        "description": "To get the SEO information, use the following route",
+        "tags": ["Meals"],
+        "summary": "List all meals",
+        "description": "To list all meals, use the following route",
         "security": [
           { "bearerAuth": [] }
         ],
@@ -275,25 +269,60 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Seo"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Meal"
+                  }
                 }
               }
             }
           }
         }
-      },
-      "put": {
-        "tags": ["Seo"],
-        "summary": "Update the SEO information",
-        "description": "To update the SEO profile, use the following route and schema",
+      }
+    },
+    "/meals/{id}": {
+      "delete": {
+        "tags": ["Meals"],
+        "summary": "Delete a meal",
+        "description": "To delete a meal, use the following route",
         "security": [
           { "bearerAuth": [] }
         ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Meal id",
+          "required": true,
+          "schema": { "type": "string" }
+        }],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Meal does not exists"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Meals"],
+        "summary": "Update a profile",
+        "description": "To update a profile, use the following route and schema",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Meal id",
+          "required": true,
+          "schema": { "type": "string" }
+        }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/Seo"
+                "$ref": "#/definitions/Meal"
               }
             }
           }
@@ -304,29 +333,45 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Seo"
+                  "$ref": "#/definitions/Meal"
                 }
               }
             }
           },
           "400": {
-            "description": "The SEO does not exists"
+            "description": "Meal does not exists"
           }
         }
-      },
-      "delete": {
-        "tags": ["Seo"],
-        "summary": "Delete the SEO",
-        "description": "To delete the SEO, use the following route",
+      }
+    },
+    "/meals/{period}": {
+      "get": {
+        "tags": ["Meals"],
+        "summary": "List meals by period",
+        "description": "To list the meals by a period, use the following route",
         "security": [
           { "bearerAuth": [] }
         ],
+        "parameters": [{
+          "name": "period",
+          "in": "path",
+          "description": "Meal Period",
+          "required": true,
+          "schema": { "type": "string" }
+        }],
         "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "The SEO does not exists"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Meal"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -342,23 +387,14 @@
         "password": { "type": "string" }
       }
     },
-    "Seo": {
+    "Meal": {
       "type": "object",
       "properties": {
-        "title": { "type": "string" },
         "description": { "type": "string" },
-        "keywords": { "type": "string" },
-        "author": { "type": "string" },
-        "fbpixel_code": { "type": "string" },
-        "ga_code": { "type": "string" },
-        "schema_twitter": { "type": "string" },
-        "schema_facebook": { "type": "string" },
-        "schema_linkedin": { "type": "string" },
-        "schema_instagram": { "type": "string" },
-        "schema_street": { "type": "string" },
-        "schema_region": { "type": "string" },
-        "schema_cep": { "type": "string" },
-        "schema_country": { "type": "string" }
+        "meal_date": { "type": "date" },
+        "period": { "type": "string" },
+        "profile_id": { "type": "string" },
+        "ga_code": { "type": "string" }
       }
     }
   },
